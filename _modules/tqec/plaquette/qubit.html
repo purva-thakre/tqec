@@ -31,6 +31,8 @@
 
     <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=8f2a1f02" />
     <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/jupyter-sphinx.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/thebelab.css" />
   
   <!-- So that users can add custom icons -->
   <script src="../../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
@@ -43,6 +45,9 @@
     <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
     <script src="../../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../../_static/thebelab-helper.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@jupyter-widgets/html-manager@^1.0.1/dist/embed-amd.js"></script>
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <script type="module" src="https://cdn.jsdelivr.net/npm/mermaid@11.2.0/dist/mermaid.esm.min.mjs"></script>
     <script type="module" src="https://cdn.jsdelivr.net/npm/@mermaid-js/layout-elk@0.1.4/dist/mermaid-layout-elk.esm.min.mjs"></script>
@@ -148,15 +153,15 @@ window.addEventListener("load", () => mermaid.run());
 
 
 <li class="nav-item ">
-  <a class="nav-link nav-internal" href="../../../contributor_guide.html">
-    Contributor Guide
+  <a class="nav-link nav-internal" href="../../../gallery/index.html">
+    Gallery
   </a>
 </li>
 
 
 <li class="nav-item ">
-  <a class="nav-link nav-internal" href="../../../gallery/index.html">
-    Gallery
+  <a class="nav-link nav-internal" href="../../../contributor_guide.html">
+    Contributor Guide
   </a>
 </li>
 
@@ -281,15 +286,15 @@ window.addEventListener("load", () => mermaid.run());
 
 
 <li class="nav-item ">
-  <a class="nav-link nav-internal" href="../../../contributor_guide.html">
-    Contributor Guide
+  <a class="nav-link nav-internal" href="../../../gallery/index.html">
+    Gallery
   </a>
 </li>
 
 
 <li class="nav-item ">
-  <a class="nav-link nav-internal" href="../../../gallery/index.html">
-    Gallery
+  <a class="nav-link nav-internal" href="../../../contributor_guide.html">
+    Contributor Guide
   </a>
 </li>
 
@@ -408,8 +413,9 @@ window.addEventListener("load", () => mermaid.run());
   <h1>Source code for tqec.plaquette.qubit</h1><div class="highlight"><pre>
 <span></span><span class="kn">from</span><span class="w"> </span><span class="nn">__future__</span><span class="w"> </span><span class="kn">import</span> <span class="n">annotations</span>
 
+<span class="kn">from</span><span class="w"> </span><span class="nn">collections.abc</span><span class="w"> </span><span class="kn">import</span> <span class="n">Iterator</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">dataclasses</span><span class="w"> </span><span class="kn">import</span> <span class="n">dataclass</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Iterator</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Any</span>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">tqec.circuit.qubit</span><span class="w"> </span><span class="kn">import</span> <span class="n">GridQubit</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">tqec.circuit.qubit_map</span><span class="w"> </span><span class="kn">import</span> <span class="n">QubitMap</span>
@@ -444,19 +450,17 @@ window.addEventListener("load", () => mermaid.run());
 <span class="sd">        Args:</span>
 <span class="sd">            orientation (TemplateOrientation, optional): Whether to use horizontal or</span>
 <span class="sd">                vertical orientation as the axis. Defaults to horizontal.</span>
+
 <span class="sd">        Returns:</span>
 <span class="sd">            The qubits on the edge of the plaquette.</span>
+
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="k">def</span><span class="w"> </span><span class="nf">_get_relevant_value</span><span class="p">(</span><span class="n">qubit</span><span class="p">:</span> <span class="n">GridQubit</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">qubit</span><span class="o">.</span><span class="n">y</span> <span class="k">if</span> <span class="n">orientation</span> <span class="o">==</span> <span class="n">Orientation</span><span class="o">.</span><span class="n">HORIZONTAL</span> <span class="k">else</span> <span class="n">qubit</span><span class="o">.</span><span class="n">x</span>
 
         <span class="n">max_index</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">_get_relevant_value</span><span class="p">(</span><span class="n">q</span><span class="p">)</span> <span class="k">for</span> <span class="n">q</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">data_qubits</span><span class="p">)</span>
-        <span class="k">return</span> <span class="p">[</span>
-            <span class="n">qubit</span>
-            <span class="k">for</span> <span class="n">qubit</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">data_qubits</span>
-            <span class="k">if</span> <span class="p">(</span><span class="n">_get_relevant_value</span><span class="p">(</span><span class="n">qubit</span><span class="p">)</span> <span class="o">==</span> <span class="n">max_index</span><span class="p">)</span>
-        <span class="p">]</span></div>
+        <span class="k">return</span> <span class="p">[</span><span class="n">qubit</span> <span class="k">for</span> <span class="n">qubit</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">data_qubits</span> <span class="k">if</span> <span class="p">(</span><span class="n">_get_relevant_value</span><span class="p">(</span><span class="n">qubit</span><span class="p">)</span> <span class="o">==</span> <span class="n">max_index</span><span class="p">)]</span></div>
 
 
 <div class="viewcode-block" id="PlaquetteQubits.get_qubits_on_side">
@@ -474,6 +478,7 @@ window.addEventListener("load", () => mermaid.run());
 
 <span class="sd">        Returns:</span>
 <span class="sd">            The qubits on the edge of the plaquette.</span>
+
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="n">side</span> <span class="o">==</span> <span class="n">PlaquetteSide</span><span class="o">.</span><span class="n">LEFT</span><span class="p">:</span>
             <span class="n">min_x</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">q</span><span class="o">.</span><span class="n">x</span> <span class="k">for</span> <span class="n">q</span> <span class="ow">in</span> <span class="bp">self</span><span class="p">)</span>
@@ -513,15 +518,12 @@ window.addEventListener("load", () => mermaid.run());
 
     <span class="nd">@property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">syndrome_qubits_with_indices</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Iterator</span><span class="p">[</span><span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="n">GridQubit</span><span class="p">]]:</span>
-        <span class="k">yield from</span> <span class="p">(</span>
-            <span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">q</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">q</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">syndrome_qubits_indices</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">syndrome_qubits</span><span class="p">)</span>
-        <span class="p">)</span>
+        <span class="k">yield from</span> <span class="p">((</span><span class="n">i</span><span class="p">,</span> <span class="n">q</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">q</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">syndrome_qubits_indices</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">syndrome_qubits</span><span class="p">))</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">qubit_map</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">QubitMap</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">QubitMap</span><span class="p">(</span>
-            <span class="nb">dict</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data_qubits_with_indices</span><span class="p">)</span>
-            <span class="o">|</span> <span class="nb">dict</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">syndrome_qubits_with_indices</span><span class="p">)</span>
+            <span class="nb">dict</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data_qubits_with_indices</span><span class="p">)</span> <span class="o">|</span> <span class="nb">dict</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">syndrome_qubits_with_indices</span><span class="p">)</span>
         <span class="p">)</span>
 
 <div class="viewcode-block" id="PlaquetteQubits.to_dict">
@@ -532,6 +534,7 @@ window.addEventListener("load", () => mermaid.run());
 <span class="sd">        Returns:</span>
 <span class="sd">            a dictionary with the keys ``data_qubits`` and ``syndrome_qubits`` and</span>
 <span class="sd">            their corresponding values.</span>
+
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="p">{</span>
             <span class="s2">&quot;data_qubits&quot;</span><span class="p">:</span> <span class="p">[</span><span class="n">q</span><span class="o">.</span><span class="n">to_dict</span><span class="p">()</span> <span class="k">for</span> <span class="n">q</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">data_qubits</span><span class="p">],</span>
@@ -552,6 +555,7 @@ window.addEventListener("load", () => mermaid.run());
 <span class="sd">        Returns:</span>
 <span class="sd">            a new instance of :class:`PlaquetteQubits` with the provided</span>
 <span class="sd">            ``data_qubits`` and ``syndrome_qubits``.</span>
+
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">data_qubits</span> <span class="o">=</span> <span class="p">[</span><span class="n">GridQubit</span><span class="o">.</span><span class="n">from_dict</span><span class="p">(</span><span class="n">q</span><span class="p">)</span> <span class="k">for</span> <span class="n">q</span> <span class="ow">in</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;data_qubits&quot;</span><span class="p">]]</span>
         <span class="n">syndrome_qubits</span> <span class="o">=</span> <span class="p">[</span><span class="n">GridQubit</span><span class="o">.</span><span class="n">from_dict</span><span class="p">(</span><span class="n">q</span><span class="p">)</span> <span class="k">for</span> <span class="n">q</span> <span class="ow">in</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;syndrome_qubits&quot;</span><span class="p">]]</span>
